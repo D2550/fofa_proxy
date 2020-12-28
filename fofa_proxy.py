@@ -22,7 +22,6 @@ def check(proxy_ip, proxy_port):
         print('未检测到pysocks')
         print('pip install -U requests[socks]')
         print('pip install pysocks')
-        print('')
         exit()
 
 
