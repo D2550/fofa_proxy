@@ -11,7 +11,7 @@ THREAD_NUM = 10
 task_queue = Queue()
 
 # 初始化 FOFA 客户端
-email, key = ('email', 'key')
+email, key = ('88@qq.com', '88888')
 client = fofa.Client(email, key)
 
 
@@ -25,12 +25,16 @@ def check_proxy():
         try:
             requests.get(url=url, proxies=proxies, timeout=3)
             print(fr'[*] success: socks5://{proxy_ip}:{proxy_port}')
-            # r = requests.get('https://www.taobao.com/help/getip.php', proxies=proxies, timeout=3)
-            # public_ip = r.text.replace('ipCallback({ip:"', '').replace('"})', '')
-            # print('[*] 出口IP:', end='')
-            # os.system('nali ' + public_ip)
-            with open('success.txt', 'a') as file:
-                file.write(fr'[*] success: socks5://{proxy_ip}:{proxy_port}' + '\n')
+            r = requests.get('https://www.taobao.com/help/getip.php', proxies=proxies, timeout=3)
+            # 简易蜜罐判断
+            if 'ipCallback' in r.text:
+                # public_ip = r.text.replace('ipCallback({ip:"', '').replace('"})', '')
+                # print('[*] 出口IP:', end='')
+                # os.system('nali ' + public_ip)
+                with open('success.txt', 'a') as file:
+                    file.write(fr'[*] success: socks5://{proxy_ip}:{proxy_port}' + '\n')
+            else:
+                print('[*] 警惕蜜罐')
         except requests.exceptions.ConnectionError:
             pass
         except requests.exceptions.ReadTimeout:
