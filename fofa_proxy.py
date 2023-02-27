@@ -25,10 +25,10 @@ def check_proxy():
         try:
             requests.get(url=url, proxies=proxies, timeout=3)
             print(fr'[*] success: socks5://{proxy_ip}:{proxy_port}')
-            r = requests.get('https://www.taobao.com/help/getip.php', proxies=proxies, timeout=3)
-            public_ip = r.text.replace('ipCallback({ip:"', '').replace('"})', '')
-            print('[*] 出口IP:', end='')
-            os.system('nali ' + public_ip)
+            # r = requests.get('https://www.taobao.com/help/getip.php', proxies=proxies, timeout=3)
+            # public_ip = r.text.replace('ipCallback({ip:"', '').replace('"})', '')
+            # print('[*] 出口IP:', end='')
+            # os.system('nali ' + public_ip)
             with open('success.txt', 'a') as file:
                 file.write(fr'[*] success: socks5://{proxy_ip}:{proxy_port}' + '\n')
         except requests.exceptions.ConnectionError:
